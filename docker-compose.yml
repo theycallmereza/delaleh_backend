@@ -37,6 +37,15 @@ services:
     env_file:
       - .env
 
+  delaleh_beat:
+    build: .
+    command: celery -A delaleh beat -l INFO --scheduler django_celery_beat.schedulers:DatabaseScheduler
+    depends_on:
+      - delaleh_db
+      - delaleh_rabbitmq
+    env_file:
+      - .env
+
 volumes:
   postgres_data:
   static_volume:
