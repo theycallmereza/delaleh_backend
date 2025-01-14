@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     "drf_spectacular",
     # Local
     "accounts",
+    "authentication",
     "core",
     "profiles",
 ]

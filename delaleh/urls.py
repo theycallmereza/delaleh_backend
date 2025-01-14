@@ -7,8 +7,13 @@ from drf_spectacular.views import (
     SpectacularSwaggerView,
 )
 
+v1_api_urls = [
+    path("auth/", include("authentication.urls"), name="authentication"),
+]
+
 urlpatterns = [
     path("admin/", admin.site.urls),
+    path("api/v1/", include(v1_api_urls)),
 ]
 
 spectacular_urls = [
