@@ -1,0 +1,42 @@
+services:
+  delaleh_web:
+    build: .
+    command: python manage.py runserver 0.0.0.0:8888
+    volumes:
+      - .:/app
+      - static_volume:/app/staticfiles
+    ports:
+      - "8888:8888"
+    depends_on:
+      - delaleh_db
+      - delaleh_rabbitmq
+    env_file:
+      - .env
+
+  delaleh_db:
+    image: postgres:15
+    env_file:
+      - .env
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  delaleh_rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    env_file:
+      - .env
+
+  delaleh_celery:
+    build: .
+    command: celery -A delaleh worker --loglevel=info
+    depends_on:
+      - delaleh_db
+      - delaleh_rabbitmq
+    env_file:
+      - .env
+
+volumes:
+  postgres_data:
+  static_volume:

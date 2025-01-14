@@ -1,0 +1,20 @@
+repos:
+  - repo: https://github.com/psf/black
+    rev: 23.1.0
+    hooks:
+      - id: black
+        language_version: python3
+        files: \.py$
+
+  - repo: https://github.com/pre-commit/mirrors-flake8
+    rev: v5.0.4
+    hooks:
+      - id: flake8
+        files: \.py$
+        args: [ '--max-line-length=88' ]
+
+  - repo: https://github.com/marekpiwowarski/pre-commit-hooks-isort
+    rev: v5.12.0
+    hooks:
+      - id: isort
+        files: \.py$

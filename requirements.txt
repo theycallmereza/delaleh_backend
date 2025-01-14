@@ -1,0 +1,12 @@
+bpython
+Django==4.2
+psycopg2
+celery
+django-celery-beat
+gunicorn
+python-decouple
+djangorestframework
+black
+pre-commit
+flake8
+isort
