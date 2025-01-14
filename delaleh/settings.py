@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     "rest_framework",
     "django_celery_beat",
     "corsheaders",
+    "drf_spectacular",
     # Local
     "accounts",
     "core",
@@ -145,6 +146,19 @@ AUTH_USER_MODEL = "accounts.CustomUser"
 
 # CORS
 CORS_ALLOW_ALL_ORIGINS = True
+
+# REST Framework
+REST_FRAMEWORK = {
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+}
+
+# Spectacular
+SPECTACULAR_SETTINGS = {
+    "TITLE": "Delaleh API",
+    "DESCRIPTION": "A dating app",
+    "VERSION": "1.0.0",
+    "SERVE_INCLUDE_SCHEMA": False,
+}
 
 # LOCAL CONFIGS
 if DEBUG:

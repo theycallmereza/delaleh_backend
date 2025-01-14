@@ -1,0 +1,7 @@
+openapi: 3.0.3
+info:
+  title: Delaleh API
+  version: 1.0.0
+  description: A dating app
+paths: {}
+components: {}
