@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     # Third Party
     "rest_framework",
     "django_celery_beat",
+    "corsheaders",
     # Local
     "accounts",
     "core",
@@ -49,6 +50,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -140,3 +142,6 @@ CELERY_TASK_SERIALIZER = "json"
 
 # Custom User Model
 AUTH_USER_MODEL = "accounts.CustomUser"
+
+# CORS
+CORS_ALLOW_ALL_ORIGINS = True
