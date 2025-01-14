@@ -1,6 +1,7 @@
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.db import models
 from django.utils import timezone
+
 from accounts.managers import CustomUserManager
 
 
@@ -23,38 +24,25 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     """
 
     mobile_number = models.CharField(
-        max_length=31, unique=True,
-        help_text="The user's mobile number, used as the unique identifier for authentication."
+        max_length=31,
+        unique=True,
+        help_text="The user's mobile number, used as the unique identifier for authentication.",
     )
     username = models.CharField(
-        max_length=127, unique=True,
-        help_text="The user's username, which must be unique across the system."
+        max_length=127, unique=True, help_text="The user's username, which must be unique across the system."
     )
-    first_name = models.CharField(
-        max_length=63,
-        help_text="The user's first name."
-    )
-    last_name = models.CharField(
-        max_length=63,
-        help_text="The user's last name."
-    )
-    date_joined = models.DateTimeField(
-        default=timezone.now,
-        help_text="The date and time when the user was created."
-    )
-    is_active = models.BooleanField(
-        default=True,
-        help_text="Indicates whether the user is currently active."
-    )
+    first_name = models.CharField(max_length=63, help_text="The user's first name.")
+    last_name = models.CharField(max_length=63, help_text="The user's last name.")
+    date_joined = models.DateTimeField(default=timezone.now, help_text="The date and time when the user was created.")
+    is_active = models.BooleanField(default=True, help_text="Indicates whether the user is currently active.")
     is_staff = models.BooleanField(
-        default=False,
-        help_text="Indicates whether the user has staff (admin) permissions."
+        default=False, help_text="Indicates whether the user has staff (admin) permissions."
     )
 
     objects = CustomUserManager()
 
-    USERNAME_FIELD = 'mobile_number'  # Set mobile_number as the unique identifier
-    REQUIRED_FIELDS = ['username']  # Include other fields required during superuser creation
+    USERNAME_FIELD = "mobile_number"  # Set mobile_number as the unique identifier
+    REQUIRED_FIELDS = ["username"]  # Include other fields required during superuser creation
 
     def __str__(self):
         return self.mobile_number
