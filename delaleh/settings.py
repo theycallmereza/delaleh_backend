@@ -145,3 +145,8 @@ AUTH_USER_MODEL = "accounts.CustomUser"
 
 # CORS
 CORS_ALLOW_ALL_ORIGINS = True
+
+# LOCAL CONFIGS
+if DEBUG:
+    MIDDLEWARE.append("silk.middleware.SilkyMiddleware")
+    INSTALLED_APPS.append("silk")
