@@ -14,6 +14,7 @@ User = get_user_model()
 class TokenLoginView(APIView):
     @extend_schema(
         request=TokenLoginSerializer,
+        summary="Get Login Token",
         responses={
             status.HTTP_200_OK: OpenApiResponse(
                 description="JWT tokens generated successfully",
@@ -31,7 +32,7 @@ class TokenLoginView(APIView):
     )
     def post(self, request):
         api_key = request.data.get("api_key")
-        mobile_number = request.data.get("mobile_number")
+        telegram_id = request.data.get("telegram_profile").get("telegram_id")
 
         if not api_key:
             return Response({"error": "api_key-required"}, status=status.HTTP_400_BAD_REQUEST)
@@ -42,7 +43,7 @@ class TokenLoginView(APIView):
             return Response({"error": "invalid-api_key"}, status=status.HTTP_403_FORBIDDEN)
 
         try:
-            user = User.objects.get(mobile_number=mobile_number)
+            user = User.objects.get(telegramprofile__telegram_id=telegram_id)
         except User.DoesNotExist:
             serializer = TokenLoginSerializer(data=request.data)
             serializer.is_valid(raise_exception=True)

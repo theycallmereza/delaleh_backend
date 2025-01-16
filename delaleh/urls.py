@@ -9,6 +9,7 @@ from drf_spectacular.views import (
 
 v1_api_urls = [
     path("auth/", include("authentication.urls"), name="authentication"),
+    path("profiles/", include("profiles.urls"), name="profiles"),
 ]
 
 urlpatterns = [

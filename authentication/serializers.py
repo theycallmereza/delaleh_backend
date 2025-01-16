@@ -12,6 +12,10 @@ class TelegramProfileSerializer(serializers.ModelSerializer):
         fields = (
             "id",
             "telegram_id",
+            "first_name",
+            "last_name",
+            "username",
+            "language_code",
         )
 
 
