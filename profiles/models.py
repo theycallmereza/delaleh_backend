@@ -1,7 +1,11 @@
+from datetime import datetime
+
 from django.contrib.auth import get_user_model
 from django.db import models
+from geopy.geocoders import Nominatim
 
 from core.models import BaseModel
+from profiles.utils import custom_image_upload_to
 
 User = get_user_model()
 
@@ -97,7 +101,7 @@ class UserProfile(BaseModel):
     image = models.ImageField(
         null=True,
         blank=True,
-        upload_to="profile_images",
+        upload_to=custom_image_upload_to,
         help_text="A profile image for the user, stored in the 'profile_images' directory (optional).",
     )
     latitude = models.FloatField(
@@ -110,3 +114,38 @@ class UserProfile(BaseModel):
         blank=True,
         help_text="The longitude coordinate of the user's location, used for geolocation features (optional).",
     )
+
+    @property
+    def age(self):
+        """
+        Calculate age from a birth date string (format: YYYY-MM-DD).
+        """
+        # Get the current date
+        today = datetime.today().date()
+
+        # Calculate the difference in years
+        age = today.year - self.birth_date.year
+
+        # Adjust if the birthday hasn't occurred yet this year
+        if (today.month, today.day) < (self.birth_date.month, self.birth_date.day):
+            age -= 1
+
+        return age
+
+    @property
+    def location(self):
+        """
+        Find location from latitude and longitude.
+        """
+        # Initialize Nominatim API
+        geolocator = Nominatim(user_agent="Delaleh_backend")
+
+        # Perform reverse geocoding
+        location = geolocator.reverse((self.latitude, self.longitude), exactly_one=True)
+
+        # Extract the city name
+        if location:
+            address = location.raw.get("address", {})
+            location = address.get("city") or address.get("town") or address.get("village")
+            return location.replace("شهر", "").strip()
+        return None

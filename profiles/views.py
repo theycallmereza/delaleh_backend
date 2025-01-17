@@ -4,14 +4,14 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from profiles.models import UserProfile
-from profiles.serializers import ProfileSerializer
+from profiles.serializers import ListProfileSerializer, ProfileSerializer
 
 
 class ProfileAPIView(APIView):
     permission_classes = (IsAuthenticated,)
 
     def get(self, request, *args, **kwargs):
-        serializer = ProfileSerializer(request.user.profile)
+        serializer = ListProfileSerializer(request.user.profile, context={"request": request})
         return Response(serializer.data)
 
     @extend_schema(request=ProfileSerializer, responses={200: ProfileSerializer}, summary="Update Profile Information")
@@ -25,4 +25,4 @@ class ProfileAPIView(APIView):
         serializer.is_valid(raise_exception=True)
         serializer.save()
 
-        return Response(serializer.data)
+        return Response(ListProfileSerializer(profile).data)

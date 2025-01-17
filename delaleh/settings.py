@@ -169,6 +169,14 @@ SPECTACULAR_SETTINGS = {
     "SERVE_INCLUDE_SCHEMA": False,
 }
 
+# MEDIA
+MEDIA_URL = "/media/"  # URL to access media files
+MEDIA_ROOT = BASE_DIR / "media"
+
+# NGROK
+USE_NGROK = config("USE_NGROK", cast=bool, default=False)
+NGROK_URL = config("NGROK_URL")
+
 # LOCAL CONFIGS
 if DEBUG:
     MIDDLEWARE.append("silk.middleware.SilkyMiddleware")

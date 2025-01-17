@@ -15,3 +15,4 @@ pre-commit==4.0.1
 psycopg2==2.9.10
 python-decouple==3.8
 Pillow
+geopy
